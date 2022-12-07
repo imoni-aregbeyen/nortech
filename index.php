@@ -1,8 +1,12 @@
 <?php
 $title = 'nortech digital';
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
-$links = ['who-we-are', 'what-we-do', 'our-work', 'contact-us'];
+
 $brand = explode(' ', $title);
+$links = ['who-we-are', 'what-we-do', 'our-work', 'contact-us'];
+
+$hero_h = 'custom software & web solutions';
+$hero_p = 'Our team will identify a custom solution to fit your idea, timeline, and budget, then design and build the application to meet your business needs.';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +18,7 @@ $brand = explode(' ', $title);
   <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg bg-light">
+  <nav class="navbar sticky-top navbar-expand-lg bg-light">
     <div class="container">
       <a class="navbar-brand" href="./">
         <span class="fw-bold"><?= isset($brand[0]) ? strtoupper($brand[0]) : '' ?></span><?= isset($brand[1]) ? strtoupper($brand[1]) : '' ?>
@@ -36,6 +40,19 @@ $brand = explode(' ', $title);
       </div>
     </div>
   </nav>
+
+  <div class="bg-dark text-secondary py-5 text-center">
+    <div class="container py-5">
+      <h1 class="display-4 text-white"><?= strtoupper($hero_h) ?></h1>
+      <div class="col-lg-10 mx-auto">
+        <p class="lead mb-4"><?= $hero_p ?></p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <a href="" class="btn btn-dark btn-lg px-5">&darr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
