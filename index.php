@@ -36,11 +36,11 @@ $hero_p = 'Our team will identify a custom solution to fit your idea, timeline, 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse">
+      <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ms-auto">
           <?php foreach($links as $link): ?>
             <li class="nav-item ms-lg-3">
-              <a class="nav-link <?php if ($link === $page) echo 'active' ?>" <?php if ($link === $page) echo 'aria-current="page"' ?> href="?page=<?= $link ?>">
+              <a class="nav-link <?php if ($link === $page) echo 'active' ?>" <?php if ($link === $page) echo 'aria-current="page"' ?> href="?page=<?= $link ?>#<?= $link ?>">
                 <?= strtoupper(str_replace('-', ' ', $link)) ?>
               </a>
             </li>
@@ -63,6 +63,39 @@ $hero_p = 'Our team will identify a custom solution to fit your idea, timeline, 
       </div>
     </div>
   </div>
+
+  <section id="what-we-do" class="py-5">
+    <div class="container py-5">
+      <h2 class="display-5">OUR SERVICES</h2>
+      <div class="border-bottom border-5 mb-3" style="width:64px"></div>
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card text-bg-dark mb-3">
+            <img src="img/kelly-sikkema.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay">
+              <h5 class="card-title display-6">WEB DESIGN & DEVELOPMENT</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card text-bg-dark mb-3">
+            <img src="img/kelly-sikkema.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay">
+              <h5 class="card-title display-6">TECH CONSULTANCY</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card text-bg-dark mb-3">
+            <img src="img/kelly-sikkema.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay">
+              <h5 class="card-title display-6">DIGITAL SKILLS TRAINING</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section id="contact-us" class="bg-green py-5">
     <div class="container py-5">
