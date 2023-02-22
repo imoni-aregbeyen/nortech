@@ -1,9 +1,45 @@
 <?php
+session_start();
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$db = "admin";
+
+$conn = new mysqli($servername, $username, $password, $db);
+
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+  return $data;
+}
+
+function get_data($tbl, $id=0) {
+  $data = [];
+  $conn = $GLOBALS['conn'];
+  $sql = "SELECT * FROM $tbl";
+  if ($id <> 0) $sql = "SELECT * FROM $tbl WHERE id=$id";
+  if (!is_numeric($id)) $sql = "SELECT * FROM $tbl WHERE $id";
+  $rs = $conn->query($sql); $num_rows = 0;
+  if ($rs) $num_rows = $rs->num_rows;
+  if ($num_rows > 0) {
+    while ($row = $rs->fetch_assoc()) {
+      $data[] = $row;
+    }
+  }
+  return $data;
+}
+
 $title = 'nortech digital';
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
 $brand = explode(' ', $title);
-$links = ['who-we-are', 'what-we-do', 'our-work', 'contact-us'];
+$links = ['services', 'projects', 'contact'];
 
 $hero_h = 'custom software & web solutions';
 $hero_p = 'Our team will identify a custom solution to fit your idea, timeline, and budget, then design and build the application to meet your business needs.';
@@ -40,7 +76,7 @@ $hero_p = 'Our team will identify a custom solution to fit your idea, timeline, 
         <ul class="navbar-nav ms-auto">
           <?php foreach($links as $link): ?>
             <li class="nav-item ms-lg-3">
-              <a class="nav-link <?php if ($link === $page) echo 'active' ?>" <?php if ($link === $page) echo 'aria-current="page"' ?> href="?page=<?= $link ?>#<?= $link ?>">
+              <a class="nav-link <?php if ($link === $page) echo 'active border-bottom border-3 border-success' ?>" <?php if ($link === $page) echo 'aria-current="page"' ?> href="?page=<?= $link ?>#<?= $link ?>">
                 <?= strtoupper(str_replace('-', ' ', $link)) ?>
               </a>
             </li>
@@ -50,80 +86,7 @@ $hero_p = 'Our team will identify a custom solution to fit your idea, timeline, 
     </div>
   </nav>
 
-  <div class="bg-dark text-secondary py-5 text-center bg-img">
-    <div class="container py-5">
-      <h1 class="display-4 text-white"><?= strtoupper($hero_h) ?></h1>
-      <div class="col-lg-10 mx-auto">
-        <p class="lead text-white mb-4"><?= $hero_p ?></p>
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-          <a href="#contact-us" class="btn btn-outline-light btn-lg px-4 rounded-0">
-            <span>GET STARTED</span> <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <section id="what-we-do" class="py-5">
-    <div class="container py-5">
-      <h2 class="display-5">OUR SERVICES</h2>
-      <div class="border-bottom border-5 mb-3" style="width:64px"></div>
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="card text-bg-dark mb-3">
-            <img src="img/kelly-sikkema.jpg" class="card-img" alt="...">
-            <div class="card-img-overlay">
-              <h5 class="card-title display-6">WEB DESIGN & DEVELOPMENT</h5>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="card text-bg-dark mb-3">
-            <img src="img/kelly-sikkema.jpg" class="card-img" alt="...">
-            <div class="card-img-overlay">
-              <h5 class="card-title display-6">TECH CONSULTANCY</h5>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="card text-bg-dark mb-3">
-            <img src="img/kelly-sikkema.jpg" class="card-img" alt="...">
-            <div class="card-img-overlay">
-              <h5 class="card-title display-6">DIGITAL SKILLS TRAINING</h5>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact-us" class="bg-green py-5">
-    <div class="container py-5">
-      <h2 class="display-5">LET'S WORK ON YOUR PROJECT</h2>
-      <div class="border-bottom border-5 border-primary" style="width:64px"></div>
-      <p class="lead">Fill and send the following form and we will contact shortly</p>
-      <form>
-        <div class="row">
-          <div class="col-lg">
-            <div class="mb-3">
-              <input name="name" type="text" class="form-control rounded-0 border border-4" placeholder="Your name" required>
-            </div>
-          </div>
-          <div class="col-lg">
-            <div class="mb-3">
-              <input name="phone" type="tel" class="form-control rounded-0 border border-4" placeholder="Phone number" required>
-            </div>
-          </div>
-        </div>
-        <div class="mb-3">
-          <textarea name="work" placeholder="Project description" rows="4" class="form-control rounded-0 border border-4"></textarea>
-        </div>
-        <div class="d-flex justify-content-end d-lg-block">
-          <button type="submit" class="btn btn-primary rounded-0 px-4">SEND</button>
-        </div>
-      </form>
-    </div>
-  </section>
+  <?php include "page/$page.php"; ?>
 
   <script src="js/bootstrap.bundle.min.js"></script>
 </body>
